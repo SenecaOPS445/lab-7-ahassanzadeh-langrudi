@@ -10,6 +10,28 @@ class Time:
         self.minute = minute
         self.second = second
 
+
+def change_time(time, seconds):
+    time.second += seconds
+    if valid_time(time) != True:
+        while time.second >= 60:
+             time.second -= 60
+             time.minute +=1
+
+        while time.minute >= 60:
+             time.minute -= 60
+             time.hour += 1
+        
+        while time.second < 0:
+             time.second += 60
+             time.minute -=1
+        while time.minute < 0:
+             time.minute += 60
+             time.hour -= 1
+
+        
+    return None
+
 def format_time(t):
     """Return time object (t) as a formatted string"""
     return f'{t.hour:02d}:{t.minute:02d}:{t.second:02d}'
@@ -46,3 +68,18 @@ def valid_time(t):
         return False
     return True
 
+
+# Testing the function
+time1 = Time(9, 50, 0)
+print(format_time(time1))  # '09:50:00'
+
+change_time(time1, 1800)
+print(format_time(time1))  # '10:20:00'
+
+time2 = Time(10, 20, 0)
+change_time(time2, -1800)
+print(format_time(time2))  # '09:50:00'
+
+time3 = Time(10, 0, 0)
+change_time(time3, -1800)
+print(format_time(time3))  # '09:30:00'
